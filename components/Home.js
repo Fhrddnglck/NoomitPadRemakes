@@ -2,7 +2,8 @@ import React from 'react'
 import {
     View,
     Text,
-    ImageBackground
+    ImageBackground,
+    SafeAreaView
 } from 'react-native'
 
 class Home extends React.Component{

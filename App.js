@@ -1,22 +1,24 @@
 import React from 'react';
-import { NavigationContainer } from '@react-navigation/native';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import Home from './components/Home'
-import MovieList from './components/MovieList'
-import BookList from './components/BookList'
-import NewRecord from './components/NewRecord'
-const Tab = createBottomTabNavigator();
+import Tabbar from './components/Tabbar'
+
+import { createStore } from 'redux'
+import { Provider } from 'react-redux'
+import {reducer,initReduxToDb} from './reducer'
+
+const store = createStore(reducer) //STORE CONNECTION
+
 class App extends React.Component {
-  render(){
-    return(
-      <NavigationContainer>
-      <Tab.Navigator>
-        <Tab.Screen name="Home" component={Home} />
-        <Tab.Screen name="MovieList" component={MovieList} />
-        <Tab.Screen name="BookList" component={BookList} />
-        <Tab.Screen name="NewRecord" component={NewRecord} />
-      </Tab.Navigator>
-    </NavigationContainer>
+
+  constructor(props) {
+    super(props)
+    initReduxToDb() //db items inf. transp. redux
+  }
+
+  render() {
+    return (
+      <Provider store={store}>
+        <Tabbar />
+      </Provider>
     )
   }
 };

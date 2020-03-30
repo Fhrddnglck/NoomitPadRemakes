@@ -7,14 +7,14 @@ import {
     StyleSheet,
     ImageBackground,
     Dimensions,
-    TouchableOpacity
+    TouchableOpacity,
+    StatusBar
 } from 'react-native';
 import CustomModal from './CustomModal'
 import { connect } from 'react-redux'
 import Icon from 'react-native-vector-icons/Ionicons'
 import Database from '../Database'
-import {Rating, AirbnbRating} from 'react-native-elements'
-import { TextInput } from 'react-native-gesture-handler';
+import {Rating} from 'react-native-elements'
 var reduxIndex
 
 class BookList extends React.Component {
@@ -39,6 +39,11 @@ class BookList extends React.Component {
 
     render() {
         return (
+            <ImageBackground style={{flex:1}} source={require('../src/images/BACK.png')} resizeMode='cover'>
+                <StatusBar
+                backgroundColor='transparent'
+                translucent={true}
+                />
             <View>
                 <CustomModal modalVisible={this.state.modalVisible} onClose={this.showModal}>
                     <ImageBackground
@@ -54,7 +59,7 @@ class BookList extends React.Component {
                     data={this.props.bookListRedux}
                     keyExtractor={(index) => index}
                     renderItem={({ item, index }) =>
-                        <View style={styles.listItem}>
+                        <View style={styles.listItem} key = {index}>
                             <TouchableOpacity
 
                                 onPress={() => this.showModal(item.book_uri, item.book_descr)}
@@ -95,6 +100,7 @@ class BookList extends React.Component {
                     }
                 />
             </View>
+            </ImageBackground>
         )
     }
 }

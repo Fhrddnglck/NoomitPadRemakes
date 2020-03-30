@@ -13,7 +13,8 @@ import CustomModal from './CustomModal'
 import { connect } from 'react-redux'
 import Icon from 'react-native-vector-icons/Ionicons'
 import Database from '../Database'
-
+import {Rating, AirbnbRating} from 'react-native-elements'
+import { TextInput } from 'react-native-gesture-handler';
 var reduxIndex
 
 class BookList extends React.Component {
@@ -47,6 +48,7 @@ class BookList extends React.Component {
                         <Text>{this.state.currentDetail}</Text>
                     </ImageBackground>
                 </CustomModal>
+        <Text>{this.props.bookListRedux.length}</Text>
                 <FlatList
                     style={{ marginTop: 36, width: '95%' }}
                     data={this.props.bookListRedux}
@@ -57,7 +59,6 @@ class BookList extends React.Component {
 
                                 onPress={() => this.showModal(item.book_uri, item.book_descr)}
                             >
-                                {console.log('booklistitem->'+item.book_name)}
                                 <View style={{ flexDirection: 'row', width: '100%' }}>
                                     <View style={{ marginRight: 'auto', padding: 5, marginLeft: 36 }}>
                                         <Image
@@ -68,7 +69,13 @@ class BookList extends React.Component {
                                     <View style={{ alignItems: 'center', marginRight: 100, marginTop: 16 }}>
                                         <Text style={{ color: '#383687', fontWeight: 'bold', fontSize: 25 }}>{item.book_name}</Text>
                                         <Text style={{ color: '#383687', fontWeight: 'bold', fontSize: 15 }}>{item.book_descr}</Text>
+                                        <Text style={{ color: '#383687', fontWeight: 'bold', fontSize: 15 }}>{item.book_page}</Text>
                                     </View>
+                                    <Rating
+                                    startingValue = {item.book_star}
+                                    type = 'heart'
+                                    readonly
+                                    />
                                 </View>
                             </TouchableOpacity>
                             <View style={{ justifyContent: 'flex-end', marginRight: 49 }}>

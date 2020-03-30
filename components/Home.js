@@ -2,13 +2,11 @@ import React from 'react'
 import {
     View,
     Text,
-    ImageBackground,
-    SafeAreaView
 } from 'react-native'
 
-class Home extends React.Component{
-    render(){
-        return(
+class Home extends React.Component {
+    render() { //BOOKCOUNT SIKINTILI
+        return (
             <View>
                 <Text>Home</Text>
             </View>

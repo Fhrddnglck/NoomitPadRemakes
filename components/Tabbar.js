@@ -35,6 +35,7 @@ class Tabbar extends React.Component{
                   ? 'pencil-plus'
                   : 'pencil-plus-outline'
                 }
+                size = focused ? 30 : 25
                 return <Icon name={iconName} size={size} color={color}/>
               }
             })}

@@ -8,12 +8,9 @@ import {reducer,initReduxToDb} from './reducer'
 const store = createStore(reducer) //STORE CONNECTION
 
 class App extends React.Component {
-
-  constructor(props) {
-    super(props)
-    initReduxToDb() //db items inf. transp. redux
+  async componentDidMount(){
+    await initReduxToDb()
   }
-
   render() {
     return (
       <Provider store={store}>

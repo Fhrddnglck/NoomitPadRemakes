@@ -60,11 +60,16 @@ class Book extends React.Component {
         this.animate()
         this.props.deleteItem(book_id, index)
     }
+
+    detailScreen = (item) => {
+        this.props.openModal(item)
+    }
+
     render() {
         const { item, index } = this.props
         const { coverHeight, opacitySlide } = this.state
         return (
-            <View style={styles.listItem} key={index}>
+            <View style={[styles.listItem,{marginTop:index==0?0:36}]} key={index}>
                 <View style={{ flexDirection: 'row', width: '100%' }}>
                     <View style={{ marginRight: 'auto', padding: 5 }}>
                         <Image
@@ -84,7 +89,7 @@ class Book extends React.Component {
                         />
                     </View>
                     <View style={{ justifyContent: 'space-between' }}>
-                        <Text style={{ fontSize: 8,color:'#707070',marginRight:4 }}>{item.book_date}</Text>
+                        <Text style={{ fontSize: 8, color: '#707070', marginRight: 4 }}>{item.book_date}</Text>
                         <TouchableOpacity
                             style={{}}
                             onPress={() => this.animate()}
@@ -100,7 +105,7 @@ class Book extends React.Component {
                 <Animated.View style={{ height: coverHeight, backgroundColor: '#FFEFEF', justifyContent: 'flex-end' }}>
                     <Animated.View style={{ flexDirection: 'row', alignItems: 'flex-end', justifyContent: 'space-around', width: '100%', opacity: opacitySlide }}>
                         <TouchableOpacity
-                            style={{ alignItems: 'center'}}
+                            style={{ alignItems: 'center' }}
                             onPress={() => this.deleteItem(item.book_id, index)}
                         >
                             <Ionicons
@@ -111,12 +116,14 @@ class Book extends React.Component {
                             />
                             <Text>Delete</Text>
                         </TouchableOpacity>
-                        <TouchableOpacity style={{ borderRadius: 8, backgroundColor: 'white', width: '40%', height: 50, alignItems: 'center', justifyContent: 'center',marginBottom:16 }}>
+                        <TouchableOpacity
+                            onPress={() => this.detailScreen(item)}
+                            style={{ borderRadius: 8, backgroundColor: 'white', width: '40%', height: 50, alignItems: 'center', justifyContent: 'center', marginBottom: 16 }}>
                             <Text style={{ fontWeight: '100', fontSize: 16 }}>Detail</Text>
                         </TouchableOpacity>
                         <TouchableOpacity
                             style={{ alignItems: 'center' }}
-                            onPress = {()=>{this.updateItem(item)}}
+                            onPress={() => { this.updateItem(item) }}
                         >
                             <MaterialCommunityIcons
                                 name='update'
@@ -137,14 +144,14 @@ const styles = StyleSheet.create({
         backgroundColor: 'white',
         width: '100%',
         shadowColor: '#000',
-        marginTop:36,
+        marginTop: 36,
         shadowRadius: 2.5,
         shadowOpacity: 0.15,
         shadowOffset: {
             width: 0,
             height: 1
         },
-        elevation : 2
+        elevation: 2,
     }
 })
 

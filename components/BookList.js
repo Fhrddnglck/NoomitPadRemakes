@@ -18,8 +18,7 @@ var reduxIndex
 class BookList extends React.Component {
     state = {
         modalVisible: false,
-        currentUri: '',
-        currentDetail: '',
+        item: []
     }
 
     deleteBook = (index, listIndex) => {
@@ -27,11 +26,15 @@ class BookList extends React.Component {
         Database.shared.deleteBook(index)
         this.props.deleteBook()
     }
-    showModal = (uri, desc) => {
+    showModal = (item) => {
+        this.setState({
+            item: item,
+            modalVisible: !this.state.modalVisible,
+        });
+    };
+    closeModal = () => {
         this.setState({
             modalVisible: !this.state.modalVisible,
-            currentUri: uri,
-            currentDetail: desc
         });
     };
 
@@ -42,22 +45,16 @@ class BookList extends React.Component {
                     backgroundColor='transparent'
                     translucent={true}
                 />
-                <SafeAreaView style={{alignItems:'center'}}>
-                    <CustomModal modalVisible={this.state.modalVisible} onClose={this.showModal}>
-                        <ImageBackground
-                            source={{ uri: this.state.currentUri }}
-                            style={{ width: '100%', height: 500 }}
-                        >
-                            <Text>{this.state.currentDetail}</Text>
-                        </ImageBackground>
-                    </CustomModal>
-                    <Text style={{fontSize:25,marginTop:30}}>Showing {this.props.bookListRedux.length} books</Text>
+                <SafeAreaView style={{ alignItems: 'center', justifyContent: 'center' }}>
+                    <CustomModal modalVisible={this.state.modalVisible} onClose={this.closeModal} item={this.state.item} />
+                    <Text style={{ fontSize: 25, marginTop: 30 }}>Showing {this.props.bookListRedux.length} books</Text>
                     <FlatList
-                        style={{ marginTop: 36, width: '95%' }}
+                        style={{ marginTop: 25, width: '95%'}}
+                        contentContainerStyle = {{paddingBottom:49}}
                         data={this.props.bookListRedux}
                         keyExtractor={(index) => index}
                         renderItem={({ item, index }) =>
-                            <Book item={item} index={index} deleteItem = {this.deleteBook} />
+                            <Book item={item} index={index} deleteItem={this.deleteBook} openModal={this.showModal} />
                         }
                     />
                 </SafeAreaView>

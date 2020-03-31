@@ -99,7 +99,7 @@ class NewRecord extends React.Component {
                 <TextInput
                     placeholder='Book Description'
                     multiline={true}
-                    numberOfLines={5}
+                    numberOfLines={2}
                     style={{
                         backgroundColor: '#C8CEFF', width: 250, color: '#383687', fontWeight: 'bold', borderRadius: 25,
                         shadowColor: '#3100FF', shadowOffset: { width: 0, height: 3 }, shadowOpacity: 0.5, shadowRadius: 2, elevation: 10
@@ -109,7 +109,7 @@ class NewRecord extends React.Component {
                 <TextInput
                     placeholder='Book Subject'
                     multiline={true}
-                    numberOfLines={5}
+                    numberOfLines={2}
                     style={{
                         backgroundColor: '#C8CEFF', width: 250, color: '#383687', fontWeight: 'bold', borderRadius: 25,
                         shadowColor: '#3100FF', shadowOffset: { width: 0, height: 3 }, shadowOpacity: 0.5, shadowRadius: 2, elevation: 10

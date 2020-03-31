@@ -3,18 +3,16 @@ import {
     View,
     Text,
     FlatList,
-    Image,
-    StyleSheet,
     ImageBackground,
-    Dimensions,
-    TouchableOpacity,
-    StatusBar
+    StatusBar,
+    SafeAreaView
 } from 'react-native';
 import CustomModal from './CustomModal'
 import { connect } from 'react-redux'
-import Icon from 'react-native-vector-icons/Ionicons'
+
 import Database from '../Database'
-import {Rating} from 'react-native-elements'
+import { Rating } from 'react-native-elements'
+import Book from './Book'
 var reduxIndex
 
 class BookList extends React.Component {
@@ -39,67 +37,30 @@ class BookList extends React.Component {
 
     render() {
         return (
-            <ImageBackground style={{flex:1}} source={require('../src/images/BACK.png')} resizeMode='cover'>
+            <ImageBackground style={{ flex: 1 }} source={require('../src/images/BACK.png')} resizeMode='cover'>
                 <StatusBar
-                backgroundColor='transparent'
-                translucent={true}
+                    backgroundColor='transparent'
+                    translucent={true}
                 />
-            <View>
-                <CustomModal modalVisible={this.state.modalVisible} onClose={this.showModal}>
-                    <ImageBackground
-                        source={{ uri: this.state.currentUri }}
-                        style={{ width: '100%', height: 500 }}
-                    >
-                        <Text>{this.state.currentDetail}</Text>
-                    </ImageBackground>
-                </CustomModal>
-        <Text>{this.props.bookListRedux.length}</Text>
-                <FlatList
-                    style={{ marginTop: 36, width: '95%' }}
-                    data={this.props.bookListRedux}
-                    keyExtractor={(index) => index}
-                    renderItem={({ item, index }) =>
-                        <View style={styles.listItem} key = {index}>
-                            <TouchableOpacity
-
-                                onPress={() => this.showModal(item.book_uri, item.book_descr)}
-                            >
-                                <View style={{ flexDirection: 'row', width: '100%' }}>
-                                    <View style={{ marginRight: 'auto', padding: 5, marginLeft: 36 }}>
-                                        <Image
-                                            source={{ uri: item.book_uri }}
-                                            style={{ width: 150, height: 150, borderRadius: 180 }}
-                                        />
-                                    </View>
-                                    <View style={{ alignItems: 'center', marginRight: 100, marginTop: 16 }}>
-                                        <Text style={{ color: '#383687', fontWeight: 'bold', fontSize: 25 }}>{item.book_name}</Text>
-                                        <Text style={{ color: '#383687', fontWeight: 'bold', fontSize: 15 }}>{item.book_descr}</Text>
-                                        <Text style={{ color: '#383687', fontWeight: 'bold', fontSize: 15 }}>{item.book_page}</Text>
-                                    </View>
-                                    <Rating
-                                    startingValue = {item.book_star}
-                                    type = 'heart'
-                                    readonly
-                                    />
-                                </View>
-                            </TouchableOpacity>
-                            <View style={{ justifyContent: 'flex-end', marginRight: 49 }}>
-                                <TouchableOpacity
-                                    style={{}}
-                                    onPress={() => this.deleteBook(item.book_id, index)}
-                                >
-                                    <Icon
-                                        name='ios-trash'
-                                        size={49}
-
-                                    />
-                                </TouchableOpacity>
-                            </View>
-
-                        </View>
-                    }
-                />
-            </View>
+                <SafeAreaView style={{alignItems:'center'}}>
+                    <CustomModal modalVisible={this.state.modalVisible} onClose={this.showModal}>
+                        <ImageBackground
+                            source={{ uri: this.state.currentUri }}
+                            style={{ width: '100%', height: 500 }}
+                        >
+                            <Text>{this.state.currentDetail}</Text>
+                        </ImageBackground>
+                    </CustomModal>
+                    <Text style={{fontSize:25,marginTop:30}}>Showing {this.props.bookListRedux.length} books</Text>
+                    <FlatList
+                        style={{ marginTop: 36, width: '95%' }}
+                        data={this.props.bookListRedux}
+                        keyExtractor={(index) => index}
+                        renderItem={({ item, index }) =>
+                            <Book item={item} index={index} deleteItem = {this.deleteBook} />
+                        }
+                    />
+                </SafeAreaView>
             </ImageBackground>
         )
     }
@@ -116,21 +77,3 @@ function mapDispatchToProps(dispatch) { //EĞER SADECE LİSTELEME YAPACAKSAK BUN
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(BookList)
-const styles = StyleSheet.create({
-    listItem: {
-        backgroundColor: '#F9F8FF',
-        flexDirection: 'row',
-        borderRadius: 15,
-        justifyContent: 'center',
-        marginTop: 15,
-        width: '100%',
-        shadowColor: '#3700F2',
-        shadowRadius: 10,
-        shadowOpacity: 0.5,
-        shadowOffset: {
-            width: 0,
-            height: 3
-        }
-        , elevation: 8
-    }
-})

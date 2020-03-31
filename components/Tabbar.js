@@ -40,7 +40,7 @@ class Tabbar extends React.Component{
               }
             })}
             tabBarOptions={{
-              activeTintColor:'tomato',
+              activeTintColor:'#E44400',
               inactiveTintColor:'gray',
             }}
             >

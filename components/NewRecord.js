@@ -26,6 +26,7 @@ class NewRecord extends React.Component {
             bookSubject: '',
             bookUri: '',
             bookDescription: '',
+            bookDate:'',
             bookStar : 3
         }
     }
@@ -40,7 +41,11 @@ class NewRecord extends React.Component {
         })
     }
     saveBook = async () => {
-        object = `{ "book_name":"${this.state.bookName}","book_author":"${this.state.bookAuthor}","book_uri":"${this.state.bookUri}","book_descr":"${this.state.bookDescription}","book_page":${this.state.bookPage},"book_subject":"${this.state.bookSubject}","book_star":${this.state.bookStar} }`
+        var day = new Date()
+        var currentDate = (day.getDate()+'.'+(parseInt(day.getMonth())+1)+'.'+day.getFullYear()).toString()
+        console.log(currentDate)
+        // this.setState({bookDate:currentDate})
+        object = `{ "book_name":"${this.state.bookName}","book_author":"${this.state.bookAuthor}","book_uri":"${this.state.bookUri}","book_descr":"${this.state.bookDescription}","book_page":${this.state.bookPage},"book_subject":"${this.state.bookSubject}","book_star":${this.state.bookStar},"book_date":"${currentDate}" }`
         object = JSON.parse(object)
         Database.shared.saveBook(object)
         this.props.newBook();

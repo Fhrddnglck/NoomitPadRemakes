@@ -9,13 +9,10 @@ class Home extends React.Component {
     render() {
         return (
             <ImageBackground
-            source={require('../src/images/BACK.png')}
+            source={require('../src/images/MainMenuback.png')}
             resizeMode='cover'
             style={{flex:1}}
             >
-            <View style={{ flex: 1 }}>
-                <Text>HOME</Text>
-            </View>
             </ImageBackground>
 
         )

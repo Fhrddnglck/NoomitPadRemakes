@@ -37,6 +37,7 @@ export default class CustomModal extends React.Component {
                 <View style={{ width: '90%', backgroundColor: '#F3EEEE', alignSelf: 'center', overflow: 'hidden', borderRadius: 30, height: height / 1.1 }}>
                     <View>
                         <ImageBackground
+                        resizeMode = 'cover'
                             source={{ uri: this.props.item.book_uri }}
                             style={{ width: '100%', height: 250, marginBottom: 'auto' }}
                         >

@@ -67,7 +67,7 @@ class NewRecord extends React.Component {
         const { photo } = this.state
         return (
             <SafeAreaView style={{ flex: 1, backgroundColor: '#F3EBEB', width: '100%' }}>
-                <View style={{ flex: 0.4, backgroundColor: '#FC813C', borderBottomLeftRadius: 30, borderBottomRightRadius: 30, justifyContent: 'center', alignItems: 'center', flexDirection: 'row' }}>
+                <View style={{ flex: 0.4, backgroundColor: '#FC813C', borderBottomLeftRadius: 30, borderBottomRightRadius: 30, justifyContent: 'center', alignItems: 'center'}}>
                     <View style={{ width: width / 3.5, height: width / 3.5, backgroundColor: 'white', borderRadius: 180, shadowColor: 'black', shadowOffset: { width: 3, height: 4 }, shadowOpacity: 0.4, shadowRadius: 15, elevation: 15 }}>
                         {photo && (
                             <Image
@@ -79,7 +79,7 @@ class NewRecord extends React.Component {
                             <Ionicons
                                 name='ios-add'
                                 size={width / 7}
-                                color='grey'
+                                color='white'
                             />
                         </TouchableOpacity>
                 </View>

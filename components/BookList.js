@@ -12,13 +12,16 @@ import { AdMobBanner } from 'react-native-admob'
 import Database from '../Database'
 import { Rating } from 'react-native-elements'
 import Book from './Book'
+import UpdateBook from './UpdateBook'
 var reduxIndex
 
 class BookList extends React.Component {
     state = {
         modalVisible: false,
         item: [],
-        index : 0
+        index : 0,
+        updateItem : [],
+        updateVisible : false
     }
 
     deleteBook = (index, listIndex) => {
@@ -39,12 +42,24 @@ class BookList extends React.Component {
         });
     };
 
+    updateBook = (item)=>{
+        this.setState({
+            updateVisible : !this.state.updateVisible,
+            updateItem : item
+        })
+    }
+    closeUpdate = () =>{
+        this.setState({
+            updateVisible:!this.state.updateVisible
+        })
+    }
+
     render() {
         return (
             <ImageBackground style={{ flex: 1 }} source={require('../src/images/BACK.png')} resizeMode='cover'>
                 <SafeAreaView style={{ alignItems: 'center', justifyContent: 'center' }}>
                     <CustomModal modalVisible={this.state.modalVisible} onClose={this.closeModal} item={this.state.item} index={this.state.index}/>
-
+                    <UpdateBook item={this.state.updateItem} modalVisible = {this.state.updateVisible} onCloseUpdate = {this.closeUpdate}/>
                     <Text style={{ fontSize: 25, marginTop: 30 }}>Showing {this.props.bookListRedux.length} books</Text>
                     {/* <AdMobBanner
                         adSize="fullBanner"
@@ -59,7 +74,7 @@ class BookList extends React.Component {
                         data={this.props.bookListRedux}
                         keyExtractor={(index) => index}
                         renderItem={({ item, index }) =>
-                            <Book item={item} index={index} deleteItem={this.deleteBook} openModal={this.showModal} />
+                            <Book item={item} index={index} deleteItem={this.deleteBook} openModal={this.showModal} updateBook={this.updateBook} />
                         }
                     />
                 </SafeAreaView>

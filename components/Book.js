@@ -53,7 +53,7 @@ class Book extends React.Component {
 
 
     updateItem = (item) => {
-        console.log(item)
+        this.props.updateBook(item)
     }
 
     deleteItem = (book_id, index) => {
@@ -119,7 +119,7 @@ class Book extends React.Component {
                         <TouchableOpacity
                             onPress={() => this.detailScreen(item,index)}
                             style={{ borderRadius: 8, backgroundColor: 'white', width: '40%', height: 50, alignItems: 'center', justifyContent: 'center', marginBottom: 16 }}>
-                            <Text style={{ fontWeight: '100', fontSize: 16 }}>Detail</Text>
+                            <Text style={{ fontWeight: 'bold', fontSize: 24}}>Detail</Text>
                         </TouchableOpacity>
                         <TouchableOpacity
                             style={{ alignItems: 'center' }}

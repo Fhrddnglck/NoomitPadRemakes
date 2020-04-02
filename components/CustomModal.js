@@ -76,7 +76,7 @@ class CustomModal extends React.Component {
                                 <Text style={{ fontSize: 36, color: 'grey', borderBottomWidth: 0.5, paddingBottom: 10, paddingLeft: 30, paddingRight: 30 }}>{this.props.item.book_name}</Text>
                                 <Text style={{ color: 'grey', fontSize: 16, marginTop: 16 }}>{this.props.item.book_page} Pages</Text>
                                 <Text style={{ color: 'grey', fontSize: 16 }}>Book Author is {this.props.item.book_author}</Text>
-                                <Text style={{ color: 'grey', fontSize: 16 }}>20.02.2020-{this.props.item.book_date} between</Text>
+                                {/* <Text style={{ color: 'grey', fontSize: 16 }}>20.02.2020-{this.props.item.book_date} between</Text> */}
                             </View>
                         </View>
                         <ButtonGroup

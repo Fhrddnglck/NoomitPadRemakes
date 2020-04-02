@@ -4,19 +4,17 @@ import Ionicons from 'react-native-vector-icons/Ionicons'
 import { ButtonGroup } from 'react-native-elements'
 import { TextInput, FlatList } from 'react-native-gesture-handler'
 import Database from '../Database'
+
+import { connect } from 'react-redux'
+
 const { height } = Dimensions.get('window')
-
-
-const datas = ['sdaa','gh','bv','dsadsa']
-console.log(datas.join('eykeylanpekypasdafd'))
-console.log(datas.join('eykeylanpekypasdafd').split('eykeylanpekypasdafd'))
-export default class CustomModal extends React.Component {
+var newCitationText
+class CustomModal extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
             selectedIndex: 0,
             newCitations : '',
-            mydatas : datas
         }
     }
 //SON KALINAN YER -> YENİ KAYIT YAPILDIĞINDA BOOK_İD CUSTOM MODELE GELMİYOR, İD Yİ DATABASEYE GÖNDERİP ORDA UPDATE
@@ -26,12 +24,19 @@ export default class CustomModal extends React.Component {
         this.props.onClose() //ONCLOSE FUNCTION IN PROPS ONCLOSE
     };
     newCitation = (id) =>{
-        Database.shared.updateCitation(id)
-        this.setState({mydatas:[...this.state.mydatas,this.state.newCitations]})
+        Database.shared.updateCitation(id,this.state.newCitations)
+        this.props.append_citation(id)
     }
     updateIndex = (selectedIndex) => {
         this.setState({ selectedIndex })
     }
+
+    newCitationText = (value) =>{
+        this.setState({newCitations:value})
+        newCitationText = ''
+        newCitationText = value
+    }
+
     component1 = () => <Text>Subject</Text>
     component2 = () => <Text>My citations</Text>
 
@@ -88,16 +93,15 @@ export default class CustomModal extends React.Component {
                                 ?
                                 <View>
                                 <Text>{this.props.item.book_subject}</Text>
-                                <Text>{this.props.item.book_id}</Text>
                                 </View>
                                 :
-                                <View>
+                                <View style={{height:height/3}}>
                                 <FlatList
-                                data = {this.state.mydatas}
+                                data = {this.props.bookListRedux[this.props.index].book_citations.split('appendstringfromsqlite')}
                                 keyExtractor={(index) => index}
                                 renderItem={({ item, index }) =>
-                                    <View style={{width:'50%',height:15}}>
-                                        <Text>{item}</Text>
+                                    <View style={{width:'100%',height:25}}>
+                                        <Text style={{fontSize:12,fontWeight:'bold'}}>{item}</Text>
                                     </View>
                                 }
                                 />
@@ -109,7 +113,7 @@ export default class CustomModal extends React.Component {
                                         style={{width:'90%'}}
                                         multiline={true}
                                         numberOfLines={3}
-                                        onChangeText = {(value)=>this.setState({newCitations : value})}
+                                        onChangeText = {(value)=>this.newCitationText(value)}
                                     />
                                     <TouchableOpacity
                                     onPress = {()=>this.newCitation(this.props.item.book_id)}
@@ -117,7 +121,7 @@ export default class CustomModal extends React.Component {
                                     <Ionicons
                                     name = 'md-send'
                                     color='#CB2000'
-                                    size = {height/22}
+                                    size = {height/25}
                                     />
                                     </TouchableOpacity>
                                 </View>
@@ -131,3 +135,15 @@ export default class CustomModal extends React.Component {
     }
 
 }
+function mapStateToProps(state) { //MAPLEME YAPARAK COMPONENTTE KULLANDIĞIMIZ COUNTERI APP TEKİ COUNTERE MATCHLEDİK
+    return {
+        bookListRedux: state.bookListRedux
+    }
+}
+function mapDispatchToProps(dispatch) { //EĞER SADECE LİSTELEME YAPACAKSAK BUNA GEREK YOK AMA STATE'İ DEĞİŞTİRCEKSEK BU LAZIM
+    return {
+        append_citation: (id) => dispatch({ type: 'append_citation', appendText:newCitationText,bookId:id})
+    }
+}
+
+export default connect(mapStateToProps,mapDispatchToProps)(CustomModal)

@@ -61,8 +61,8 @@ class Book extends React.Component {
         this.props.deleteItem(book_id, index)
     }
 
-    detailScreen = (item) => {
-        this.props.openModal(item)
+    detailScreen = (item,index) => {
+        this.props.openModal(item,index)
     }
 
     render() {
@@ -117,7 +117,7 @@ class Book extends React.Component {
                             <Text>Delete</Text>
                         </TouchableOpacity>
                         <TouchableOpacity
-                            onPress={() => this.detailScreen(item)}
+                            onPress={() => this.detailScreen(item,index)}
                             style={{ borderRadius: 8, backgroundColor: 'white', width: '40%', height: 50, alignItems: 'center', justifyContent: 'center', marginBottom: 16 }}>
                             <Text style={{ fontWeight: '100', fontSize: 16 }}>Detail</Text>
                         </TouchableOpacity>

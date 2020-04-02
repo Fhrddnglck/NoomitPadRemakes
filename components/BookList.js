@@ -17,7 +17,8 @@ var reduxIndex
 class BookList extends React.Component {
     state = {
         modalVisible: false,
-        item: []
+        item: [],
+        index : 0
     }
 
     deleteBook = (index, listIndex) => {
@@ -25,9 +26,10 @@ class BookList extends React.Component {
         Database.shared.deleteBook(index)
         this.props.deleteBook()
     }
-    showModal = (item) => {
+    showModal = (item,index) => {
         this.setState({
             item: item,
+            index : index,
             modalVisible: !this.state.modalVisible,
         });
     };
@@ -41,7 +43,7 @@ class BookList extends React.Component {
         return (
             <ImageBackground style={{ flex: 1 }} source={require('../src/images/BACK.png')} resizeMode='cover'>
                 <SafeAreaView style={{ alignItems: 'center', justifyContent: 'center' }}>
-                    <CustomModal modalVisible={this.state.modalVisible} onClose={this.closeModal} item={this.state.item} />
+                    <CustomModal modalVisible={this.state.modalVisible} onClose={this.closeModal} item={this.state.item} index={this.state.index}/>
 
                     <Text style={{ fontSize: 25, marginTop: 30 }}>Showing {this.props.bookListRedux.length} books</Text>
                     {/* <AdMobBanner

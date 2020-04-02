@@ -2,21 +2,33 @@ import React, { Component } from 'react'
 import { Modal, View, Image, TouchableOpacity, Text, Dimensions, ImageBackground } from 'react-native'
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import { ButtonGroup } from 'react-native-elements'
+import { TextInput, FlatList } from 'react-native-gesture-handler'
+import Database from '../Database'
 const { height } = Dimensions.get('window')
 
+
+const datas = ['sdaa','gh','bv','dsadsa']
+console.log(datas.join('eykeylanpekypasdafd'))
+console.log(datas.join('eykeylanpekypasdafd').split('eykeylanpekypasdafd'))
 export default class CustomModal extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            selectedIndex: 0
+            selectedIndex: 0,
+            newCitations : '',
+            mydatas : datas
         }
     }
-
+//SON KALINAN YER -> YENİ KAYIT YAPILDIĞINDA BOOK_İD CUSTOM MODELE GELMİYOR, İD Yİ DATABASEYE GÖNDERİP ORDA UPDATE
+//EDİP BURDA STATE İLE FLATLİSTE YAZDIRIP RENDER EDİLDİĞİNDE item verilerini stateye atmak gerekiyor.
 
     onClose = () => {
         this.props.onClose() //ONCLOSE FUNCTION IN PROPS ONCLOSE
     };
-
+    newCitation = (id) =>{
+        Database.shared.updateCitation(id)
+        this.setState({mydatas:[...this.state.mydatas,this.state.newCitations]})
+    }
     updateIndex = (selectedIndex) => {
         this.setState({ selectedIndex })
     }
@@ -34,10 +46,10 @@ export default class CustomModal extends React.Component {
                 animationType='fade'
                 transparent={true}
             >
-                <View style={{ width: '90%', backgroundColor: '#F3EEEE', alignSelf: 'center', overflow: 'hidden', borderRadius: 30, height: height / 1.1 }}>
+                <View style={{ width: '90%', backgroundColor: '#F3EEEE', alignSelf: 'center', overflow: 'hidden', borderRadius: 30, height: height / 1.1, marginTop: 2 }}>
                     <View>
                         <ImageBackground
-                        resizeMode = 'cover'
+                            resizeMode='cover'
                             source={{ uri: this.props.item.book_uri }}
                             style={{ width: '100%', height: 250, marginBottom: 'auto' }}
                         >
@@ -71,12 +83,45 @@ export default class CustomModal extends React.Component {
                             innerBorderStyle={{ color: 'grey', width: 2 }}
                             selectedTextStyle={{ color: 'white' }}
                             containerStyle={{ height: 40 }} />
-                        <View style={{ width: '95%', backgroundColor: '#F3E8E8',alignSelf:'center' }}>
+                        <View style={{ width: '95%', backgroundColor: '#F3E8E8', alignSelf: 'center' }}>
                             {this.state.selectedIndex == 0
                                 ?
+                                <View>
                                 <Text>{this.props.item.book_subject}</Text>
+                                <Text>{this.props.item.book_id}</Text>
+                                </View>
                                 :
-                                <Text>a.s</Text>
+                                <View>
+                                <FlatList
+                                data = {this.state.mydatas}
+                                keyExtractor={(index) => index}
+                                renderItem={({ item, index }) =>
+                                    <View style={{width:'50%',height:15}}>
+                                        <Text>{item}</Text>
+                                    </View>
+                                }
+                                />
+                                <View
+                                style={{ backgroundColor: 'white', width: '100%', height: height / 20,flexDirection:'row' }}
+                                >
+                                    <TextInput
+                                        placeholder='Add new citations'
+                                        style={{width:'90%'}}
+                                        multiline={true}
+                                        numberOfLines={3}
+                                        onChangeText = {(value)=>this.setState({newCitations : value})}
+                                    />
+                                    <TouchableOpacity
+                                    onPress = {()=>this.newCitation(this.props.item.book_id)}
+                                    >
+                                    <Ionicons
+                                    name = 'md-send'
+                                    color='#CB2000'
+                                    size = {height/22}
+                                    />
+                                    </TouchableOpacity>
+                                </View>
+                                </View>
                             }
                         </View>
                     </View>

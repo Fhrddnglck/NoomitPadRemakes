@@ -4,12 +4,11 @@ import {
     Text,
     FlatList,
     ImageBackground,
-    StatusBar,
     SafeAreaView
 } from 'react-native';
 import CustomModal from './CustomModal'
 import { connect } from 'react-redux'
-
+import { AdMobBanner } from 'react-native-admob'
 import Database from '../Database'
 import { Rating } from 'react-native-elements'
 import Book from './Book'
@@ -41,16 +40,20 @@ class BookList extends React.Component {
     render() {
         return (
             <ImageBackground style={{ flex: 1 }} source={require('../src/images/BACK.png')} resizeMode='cover'>
-                <StatusBar
-                    backgroundColor='transparent'
-                    translucent={true}
-                />
                 <SafeAreaView style={{ alignItems: 'center', justifyContent: 'center' }}>
                     <CustomModal modalVisible={this.state.modalVisible} onClose={this.closeModal} item={this.state.item} />
+
                     <Text style={{ fontSize: 25, marginTop: 30 }}>Showing {this.props.bookListRedux.length} books</Text>
+                    {/* <AdMobBanner
+                        adSize="fullBanner"
+                        adUnitID="ca-app-pub-1457835335539533/4892838374"
+                        testDevices={[AdMobBanner.simulatorId]}
+                        onAdFailedToLoad={error => console.error(error)}
+                    /> */}
                     <FlatList
-                        style={{ marginTop: 25, width: '95%'}}
-                        contentContainerStyle = {{paddingBottom:49}}
+                    showsVerticalScrollIndicator = {false} //new added
+                        style={{ marginTop: 25, width: '95%' }}
+                        contentContainerStyle={{ paddingBottom: 49 }}
                         data={this.props.bookListRedux}
                         keyExtractor={(index) => index}
                         renderItem={({ item, index }) =>

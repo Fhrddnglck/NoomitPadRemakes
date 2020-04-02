@@ -5,21 +5,33 @@ import {
     ImageBackground,
     TextInput,
     TouchableOpacity,
-    Image
+    Image,
+    SafeAreaView,
+    Dimensions,
+    ScrollView,
+    StyleSheet,
+    Alert
 } from 'react-native'
 import ImagePicker from 'react-native-image-picker';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
+import Ionicons from 'react-native-vector-icons/Ionicons'
+import Foundation from 'react-native-vector-icons/Foundation'
+import FontAwesome from 'react-native-vector-icons/FontAwesome'
 import { connect } from 'react-redux'
 import Database from '../Database'
-import { Rating } from 'react-native-elements'
+import { Rating, AirbnbRating } from 'react-native-elements'
+
+const { width, height } = Dimensions.get('window')
 
 var object
+var objectRedux
 
 class NewRecord extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
             photo: null,
+            bookid : -1,
             bookName: '',
             bookAuthor: '',
             bookPage: 0,
@@ -43,96 +55,122 @@ class NewRecord extends React.Component {
     saveBook = async () => {
         var day = new Date()
         var currentDate = (day.getDate() + '.' + (parseInt(day.getMonth()) + 1) + '.' + day.getFullYear()).toString()
-        console.log(currentDate)
-        // this.setState({bookDate:currentDate})
-        object = `{ "book_name":"${this.state.bookName}","book_author":"${this.state.bookAuthor}","book_uri":"${this.state.bookUri}","book_descr":"${this.state.bookDescription}","book_page":${this.state.bookPage},"book_subject":"${this.state.bookSubject}","book_star":${this.state.bookStar},"book_date":"${currentDate}" }`
+        object = `{ "book_name":"${this.state.bookName}","book_author":"${this.state.bookAuthor}","book_uri":"${this.state.bookUri}","book_descr":"${this.state.bookDescription}","book_page":${this.state.bookPage},"book_subject":"${this.state.bookSubject}","book_star":${this.state.bookStar},"book_date":"${currentDate}","book_citations":"${''}"}`
         object = JSON.parse(object)
-        Database.shared.saveBook(object)
+       var a =  await Database.shared.saveBook(object)
+       objectRedux = `{ "book_id":${a},"book_name":"${this.state.bookName}","book_author":"${this.state.bookAuthor}","book_uri":"${this.state.bookUri}","book_descr":"${this.state.bookDescription}","book_page":${this.state.bookPage},"book_subject":"${this.state.bookSubject}","book_star":${this.state.bookStar},"book_date":"${currentDate}","book_citations":"${''}"}`
+       objectRedux = JSON.parse(objectRedux)
         this.props.newBook();
+        Alert.alert('Saved with success')
     }
-    // ratingCompleated=(rating)=>{
-    //     console.log('rating is:'+rating)
-    // }
-
     render() {
         const { photo } = this.state
         return (
-            <ImageBackground style={{ flex: 1 }} source={require('../src/images/NewRecordBack.png')} resizeMode='cover'>
-                <View style={{}}>
-                    <View style={{backgroundColor:'red',width:180,height:180}}>
-                        <View style={{ width: 169, height: 169, backgroundColor: 'white', borderRadius: 180 }}>
-                            {photo && (
-                                <Image
-                                    source={{ uri: photo.uri }}
-                                    style={{ width: 169, height: 169, borderRadius: 180 }}
-                                />)}
+            <SafeAreaView style={{ flex: 1, backgroundColor: '#F3EBEB', width: '100%' }}>
+                <View style={{ flex: 0.4, backgroundColor: '#FC813C', borderBottomLeftRadius: 30, borderBottomRightRadius: 30, justifyContent: 'center', alignItems: 'center', flexDirection: 'row' }}>
+                    <View style={{ width: width / 3.5, height: width / 3.5, backgroundColor: 'white', borderRadius: 180, shadowColor: 'black', shadowOffset: { width: 3, height: 4 }, shadowOpacity: 0.4, shadowRadius: 15, elevation: 15 }}>
+                        {photo && (
+                            <Image
+                                source={{ uri: photo.uri }}
+                                style={{ width: width / 3.5, height: width / 3.5, borderRadius: 180 }}
+                            />)}
+                    </View>
+                    <TouchableOpacity onPress={() => this.handleChoosePhoto()}>
+                            <Ionicons
+                                name='ios-add'
+                                size={width / 7}
+                                color='grey'
+                            />
+                        </TouchableOpacity>
+                </View>
+                <ScrollView contentContainerStyle={{ paddingBottom: 49 }} showsVerticalScrollIndicator={false} style={{ backgroundColor: 'white', width: '90%', marginTop: -32, alignSelf: 'center', height: height / 2, maxHeight: height / 1.5 }}>
+                    <View style={{ alignItems: 'center' }}>
+                        <Text style={{ fontSize: 36, color: '#B79993', fontWeight: '100' }}>New Book</Text>
+                        <View style={styles.inputItem}>
+                            <MaterialCommunityIcons
+                                name='book-open-page-variant'
+                                color='#E30000'
+                                size={25}
+                                style={{ width: 25, marginLeft: 16 }}
+                            />
+                            <TextInput
+                                onChangeText={(value) => this.setState({ bookName: value })}
+                                placeholder='Book Name'
+                                style={{ width: '80%', marginRight: 'auto', marginLeft: 8, color: '#B79993' }}
+                            />
                         </View>
-                        <TouchableOpacity onPress={() => this.handleChoosePhoto()}>
-                            <View>
-                                <MaterialCommunityIcons
-                                    name='google-photos'
-                                    color='grey'
-                                    size={64}
-                                />
-                            </View>
+                        <View style={styles.inputItem}>
+                            <Ionicons
+                                name='ios-person'
+                                color='#E30000'
+                                size={25}
+                                style={{ width: 25, marginLeft: 16 }}
+                            />
+                            <TextInput
+                                onChangeText={(value) => this.setState({ bookAuthor: value })}
+                                placeholder='Book Author'
+                                style={{ width: '80%', marginRight: 'auto', marginLeft: 8, color: '#B79993' }}
+                            />
+                        </View>
+                        <View style={styles.inputItem}>
+                            <Foundation
+                                name='page-multiple'
+                                color='#E30000'
+                                size={25}
+                                style={{ width: 25, marginLeft: 16 }}
+                            />
+                            <TextInput
+                                keyboardType='number-pad'
+                                onChangeText={(value) => this.setState({ bookPage: value })}
+                                placeholder='Book Page'
+                                style={{ width: '80%', marginRight: 'auto', marginLeft: 8, color: '#B79993' }}
+                            />
+                        </View>
+                        <View style={[styles.inputItem, { height: height / 8, borderRadius: 15 }]}>
+                            <MaterialCommunityIcons
+                                name='text-subject'
+                                color='#E30000'
+                                size={25}
+                                style={{ width: 25, marginLeft: 16 }}
+                            />
+                            <TextInput
+                                multiline={true}
+                                numberOfLines={3}
+                                onChangeText={(value) => this.setState({ bookSubject: value })}
+                                placeholder='Book Subject'
+                                style={{ width: '80%', marginRight: 'auto', marginLeft: 8, color: '#B79993' }}
+                            />
+                        </View>
+                        <View style={[styles.inputItem, { height: height / 8, borderRadius: 15 }]}>
+                            <FontAwesome
+                                name='pagelines'
+                                color='#E30000'
+                                size={25}
+                                style={{ width: 25, marginLeft: 16 }}
+                            />
+                            <TextInput
+                                multiline={true}
+                                numberOfLines={3}
+                                onChangeText={(value) => this.setState({ bookDescription: value })}
+                                placeholder='Book Description'
+                                style={{ width: '80%', marginRight: 'auto', marginLeft: 8, color: '#B79993' }}
+                            />
+                        </View>
+                        <AirbnbRating
+                            count={5}
+                            reviews={["Terrible", "Bad", "Good", "Nice", "Perfect"]}
+                            defaultRating={3}
+                            size={36}
+                            onFinishRating = {(value)=>this.setState({bookStar:parseInt(value)})}
+                        />
+                        <TouchableOpacity 
+                        onPress={() => this.saveBook()}
+                        style={{ borderRadius: 180, width: '60%', justifyContent: 'center', alignItems: 'center', marginTop: 32, height: height / 8, shadowColor: 'black', shadowOffset: { width: 3, height: 4 }, shadowRadius: 16, shadowOpacity: 0.4, backgroundColor: 'white', elevation: 3 }}>
+                            <Text style={{ fontWeight: 'bold', fontSize: 32, color: '#FEBF90' }}>SAVE</Text>
                         </TouchableOpacity>
                     </View>
-
-                    <Rating
-                        ratingCount={5}
-                        type='custom'
-                        ratingColor='red'
-                        defaultRating={3}
-                        size={20}
-                        onFinishRating={(val) => this.setState({ bookStar: val })}
-                        tintColor='white'
-                        showRating
-                        fractions={0}
-                        ratingBackgroundColor='grey'
-                    />
-                    <TextInput
-                        placeholder='Book Name'
-                        style={{ width: '81%', color: '#383687', fontWeight: 'bold' }}
-                        onChangeText={(value) => this.setState({ bookName: value })}
-                    />
-                    <TextInput
-                        placeholder='Book Author'
-                        style={{ width: '81%', color: '#383687', fontWeight: 'bold' }}
-                        onChangeText={(value) => this.setState({ bookAuthor: value })}
-                    />
-                    <TextInput
-                        keyboardType='number-pad'
-                        placeholder='Book page'
-                        style={{ width: '81%', color: '#383687', fontWeight: 'bold' }}
-                        onChangeText={(value) => this.setState({ bookPage: value })}
-                    />
-                    <TextInput
-                        placeholder='Book Description'
-                        multiline={true}
-                        numberOfLines={2}
-                        style={{
-                            backgroundColor: '#C8CEFF', width: 250, color: '#383687', fontWeight: 'bold', borderRadius: 25,
-                            shadowColor: '#3100FF', shadowOffset: { width: 0, height: 3 }, shadowOpacity: 0.5, shadowRadius: 2, elevation: 10
-                        }}
-                        onChangeText={(value) => this.setState({ bookDescription: value })}
-                    />
-                    <TextInput
-                        placeholder='Book Subject'
-                        multiline={true}
-                        numberOfLines={2}
-                        style={{
-                            backgroundColor: '#C8CEFF', width: 250, color: '#383687', fontWeight: 'bold', borderRadius: 25,
-                            shadowColor: '#3100FF', shadowOffset: { width: 0, height: 3 }, shadowOpacity: 0.5, shadowRadius: 2, elevation: 10
-                        }}
-                        onChangeText={(value) => this.setState({ bookSubject: value })}
-                    />
-                    <TouchableOpacity style={{ marginTop: 36 }} onPress={() => this.saveBook()}>
-                        <View style={{ backgroundColor: 'white', width: 169, height: 81, justifyContent: 'center', alignItems: 'center', marginTop: 2, borderRadius: 180 }}>
-                            <Text style={{ fontSize: 45, fontWeight: 'bold', color: '#715BFF' }}>SAVE</Text>
-                        </View>
-                    </TouchableOpacity>
-                </View>
-            </ImageBackground>
+                </ScrollView>
+            </SafeAreaView>
         )
     }
 }
@@ -143,7 +181,26 @@ function mapStateToProps(state) { //MAPLEME YAPARAK COMPONENTTE KULLANDIĞIMIZ C
 }
 function mapDispatchToProps(dispatch) { //EĞER SADECE LİSTELEME YAPACAKSAK BUNA GEREK YOK AMA STATE'İ DEĞİŞTİRCEKSEK BU LAZIM
     return {
-        newBook: () => dispatch({ type: 'new_book', NewBook: object })
+        newBook: () => dispatch({ type: 'new_book', NewBook: objectRedux })
     }
 }
+
+
+const styles = StyleSheet.create({
+    inputItem: {
+        borderRadius: 180,
+        width: '80%',
+        height: height / 15,
+        shadowColor: 'black',
+        shadowOpacity: 0.30,
+        shadowRadius: 16,
+        shadowOffset: { height: 4, width: 3 },
+        elevation: 3,
+        backgroundColor: 'white',
+        marginTop: 16,
+        flexDirection: 'row',
+        alignItems: 'center'
+    }
+})
+
 export default connect(mapStateToProps, mapDispatchToProps)(NewRecord)

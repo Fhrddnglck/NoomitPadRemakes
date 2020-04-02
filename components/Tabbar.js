@@ -2,7 +2,6 @@ import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Home from './Home'
-import MovieList from './MovieList'
 import BookList from './BookList'
 import NewRecord from './NewRecord'
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
@@ -21,11 +20,8 @@ class Tabbar extends React.Component{
                   iconName = focused
                   ? 'home'
                   : 'home-outline'
-                } else if(route.name === 'Movie List'){
-                  iconName = focused
-                  ? 'movie'
-                  : 'movie-outline'
-                } else if(route.name === 'Book List'){
+                }
+                else if(route.name === 'Book List'){
                   iconName = focused
                   ? 'book-open'
                   : 'book-open-outline'
@@ -45,7 +41,6 @@ class Tabbar extends React.Component{
             }}
             >
               <Tab.Screen name="Home" component={Home} />
-              <Tab.Screen name="Movie List" component={MovieList} />
               <Tab.Screen name="Book List" component={BookList} />
               <Tab.Screen name="New Record" component={NewRecord} />
             </Tab.Navigator>

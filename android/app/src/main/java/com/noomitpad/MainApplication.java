@@ -1,4 +1,4 @@
-package com.noomitpad;
+package com.poolapp.noomitpad;
 
 import android.app.Application;
 import android.content.Context;

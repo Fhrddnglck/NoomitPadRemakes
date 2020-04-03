@@ -69,7 +69,7 @@ class NewRecord extends React.Component {
         return (
             <SafeAreaView style={{ flex: 1, backgroundColor: '#F3EBEB', width: '100%' }}>
                 <View style={{ flex: 0.4, backgroundColor: '#FC813C', borderBottomLeftRadius: 30, borderBottomRightRadius: 30, justifyContent: 'center', alignItems: 'center'}}>
-                    <View style={{ width: width / 3.5, height: width / 3.5, backgroundColor: 'white', borderRadius: 180, shadowColor: 'black', shadowOffset: { width: 3, height: 4 }, shadowOpacity: 0.4, shadowRadius: 15, elevation: 15 }}>
+                    <View style={{ width: width / 3.7, height: width / 3.8, backgroundColor: 'white', borderRadius: 180, shadowColor: 'black', shadowOffset: { width: 3, height: 4 }, shadowOpacity: 0.4, shadowRadius: 15, elevation: 15 }}>
                         {photo && (
                             <Image
                                 source={{ uri: photo.uri }}

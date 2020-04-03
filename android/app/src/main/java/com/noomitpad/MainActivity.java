@@ -1,4 +1,4 @@
-package com.noomitpad;
+package com.poolapp.noomitpad;
 
 import com.facebook.react.ReactActivity;
 

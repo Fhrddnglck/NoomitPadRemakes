@@ -19,12 +19,12 @@ class Home extends React.Component {
                     translucent={true}
                 />
                 <View style={{ marginTop: 32, flex: 1, justifyContent: 'center' }}>
-                    {/* <AdMobBanner
+                    <AdMobBanner
                         adSize="fullBanner"
                         adUnitID="ca-app-pub-1457835335539533/4892838374"
                         testDevices={[AdMobBanner.simulatorId]}
                         onAdFailedToLoad={error => console.error(error)}
-                    /> */}
+                    />
                 </View>
             </ImageBackground>
 

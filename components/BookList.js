@@ -61,12 +61,12 @@ class BookList extends React.Component {
                     <CustomModal modalVisible={this.state.modalVisible} onClose={this.closeModal} item={this.state.item} index={this.state.index}/>
                     <UpdateBook item={this.state.updateItem} modalVisible = {this.state.updateVisible} onCloseUpdate = {this.closeUpdate}/>
                     <Text style={{ fontSize: 25, marginTop: 30 }}>Showing {this.props.bookListRedux.length} books</Text>
-                    {/* <AdMobBanner
+                    <AdMobBanner
                         adSize="fullBanner"
                         adUnitID="ca-app-pub-1457835335539533/4892838374"
                         testDevices={[AdMobBanner.simulatorId]}
                         onAdFailedToLoad={error => console.error(error)}
-                    /> */}
+                    />
                     <FlatList
                     showsVerticalScrollIndicator = {false} //new added
                         style={{ marginTop: 25, width: '95%' }}

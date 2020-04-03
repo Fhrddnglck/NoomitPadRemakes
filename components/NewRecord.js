@@ -53,6 +53,7 @@ class NewRecord extends React.Component {
         })
     }
     saveBook = async () => {
+        console.log('giriyom')
         var day = new Date()
         var currentDate = (day.getDate() + '.' + (parseInt(day.getMonth()) + 1) + '.' + day.getFullYear()).toString()
         object = `{ "book_name":"${this.state.bookName}","book_author":"${this.state.bookAuthor}","book_uri":"${this.state.bookUri}","book_descr":"${this.state.bookDescription}","book_page":${this.state.bookPage},"book_subject":"${this.state.bookSubject}","book_star":${this.state.bookStar},"book_date":"${currentDate}","book_citations":"${''}"}`
@@ -83,7 +84,7 @@ class NewRecord extends React.Component {
                             />
                         </TouchableOpacity>
                 </View>
-                <ScrollView contentContainerStyle={{ paddingBottom: 49 }} showsVerticalScrollIndicator={false} style={{ backgroundColor: 'white', width: '90%', marginTop: -32, alignSelf: 'center', height: height / 2, maxHeight: height / 1.5 }}>
+                <ScrollView contentContainerStyle={{ paddingBottom: 49 }} showsVerticalScrollIndicator={false} style={{ backgroundColor: 'white', width: '90%', marginTop: -16, alignSelf: 'center', height: height / 2, maxHeight: height / 1.5 }}>
                     <View style={{ alignItems: 'center' }}>
                         <Text style={{ fontSize: 36, color: '#B79993', fontWeight: '100' }}>New Book</Text>
                         <View style={styles.inputItem}>

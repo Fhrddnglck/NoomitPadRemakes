@@ -34,13 +34,21 @@ class Database {
         })
         Alert.alert('Deleted with success')
     }
+
+    updateBook = (item,id)=>{
+        db.transaction(tx=>{
+            tx.executeSql('UPDATE Books SET book_name = ? , book_author = ? , book_uri = ? , book_descr = ? , book_page = ? , book_subject = ? , book_star = ? , book_date = ? , book_citations = ? WHERE book_id=?',[item.book_name,item.book_author,item.book_uri,item.book_descr,item.book_page,item.book_subject,item.book_star,item.book_date,item.book_citations,id])
+        })
+    }
+
+
     updateCitation = (id,newText) => {
         newText = newText.concat('appendstringfromsqlite')
-        console.log(newText+'_o_o'+id)
+        //console.log(newText+'_o_o'+id)
         db.transaction(tx=>{
             tx.executeSql('UPDATE Books SET book_citations=book_citations || ? WHERE book_id=?',[newText,id]
             ,function(tx,result){
-                console.log(result)
+                //console.log(result)
             })
         })
     }

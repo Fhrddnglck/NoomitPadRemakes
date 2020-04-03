@@ -114,11 +114,11 @@ class Book extends React.Component {
                                 color='grey'
 
                             />
-                            <Text>Delete</Text>
+                            <Text style={{fontWeight:'bold'}}>Delete</Text>
                         </TouchableOpacity>
                         <TouchableOpacity
                             onPress={() => this.detailScreen(item,index)}
-                            style={{ borderRadius: 8, backgroundColor: 'white', width: '40%', height: 50, alignItems: 'center', justifyContent: 'center', marginBottom: 16 }}>
+                            style={{ borderRadius: 8, backgroundColor: 'white', width: '40%', height: 50, alignItems: 'center', justifyContent: 'center', marginBottom: 16,shadowColor:'black',shadowOffset:{width:3,height:3},shadowOpacity:0.4,shadowRadius:15,elevation:4 }}>
                             <Text style={{ fontWeight: 'bold', fontSize: 24}}>Detail</Text>
                         </TouchableOpacity>
                         <TouchableOpacity
@@ -130,7 +130,7 @@ class Book extends React.Component {
                                 size={49}
                                 color='grey'
                             />
-                            <Text>Update</Text>
+                            <Text style={{fontWeight:'bold'}}>Update</Text>
                         </TouchableOpacity>
                     </Animated.View>
                 </Animated.View>

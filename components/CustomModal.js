@@ -14,25 +14,25 @@ class CustomModal extends React.Component {
         super(props);
         this.state = {
             selectedIndex: 0,
-            newCitations : '',
+            newCitations: '',
         }
     }
-//SON KALINAN YER -> YENİ KAYIT YAPILDIĞINDA BOOK_İD CUSTOM MODELE GELMİYOR, İD Yİ DATABASEYE GÖNDERİP ORDA UPDATE
-//EDİP BURDA STATE İLE FLATLİSTE YAZDIRIP RENDER EDİLDİĞİNDE item verilerini stateye atmak gerekiyor.
+    //SON KALINAN YER -> YENİ KAYIT YAPILDIĞINDA BOOK_İD CUSTOM MODELE GELMİYOR, İD Yİ DATABASEYE GÖNDERİP ORDA UPDATE
+    //EDİP BURDA STATE İLE FLATLİSTE YAZDIRIP RENDER EDİLDİĞİNDE item verilerini stateye atmak gerekiyor.
 
     onClose = () => {
         this.props.onClose() //ONCLOSE FUNCTION IN PROPS ONCLOSE
     };
-    newCitation = (id) =>{
-        Database.shared.updateCitation(id,this.state.newCitations)
+    newCitation = (id) => {
+        Database.shared.updateCitation(id, this.state.newCitations)
         this.props.append_citation(id)
     }
     updateIndex = (selectedIndex) => {
         this.setState({ selectedIndex })
     }
 
-    newCitationText = (value) =>{
-        this.setState({newCitations:value})
+    newCitationText = (value) => {
+        this.setState({ newCitations: value })
         newCitationText = ''
         newCitationText = value
     }
@@ -41,6 +41,7 @@ class CustomModal extends React.Component {
     component2 = () => <Text>My citations</Text>
 
     render() {
+        console.log(height)
         const { selectedIndex } = this.state
         const buttons = [{ element: this.component1 }, { element: this.component2 }]
         if (!this.props.modalVisible) { //IF MODALVISIBLE FALSE RETURN NULL
@@ -56,7 +57,7 @@ class CustomModal extends React.Component {
                         <ImageBackground
                             resizeMode='cover'
                             source={{ uri: this.props.item.book_uri }}
-                            style={{ width: '100%', height: 250, marginBottom: 'auto' }}
+                            style={{ width: '100%', height: height / 3, marginBottom: 'auto' }}
                         >
                             <TouchableOpacity
 
@@ -92,39 +93,39 @@ class CustomModal extends React.Component {
                             {this.state.selectedIndex == 0
                                 ?
                                 <View>
-                                <Text>{this.props.item.book_subject}</Text>
+                                    <Text>{this.props.item.book_subject}</Text>
                                 </View>
                                 :
-                                <View style={{height:height/3}}>
-                                <FlatList
-                                data = {this.props.bookListRedux[this.props.index].book_citations.split('appendstringfromsqlite')}
-                                keyExtractor={(index) => index}
-                                renderItem={({ item, index }) =>
-                                    <View style={{width:'100%',height:25}}>
-                                        <Text style={{fontSize:12,fontWeight:'bold'}}>{item}</Text>
-                                    </View>
-                                }
-                                />
-                                <View
-                                style={{ backgroundColor: 'white', width: '100%', height: height / 20,flexDirection:'row' }}
-                                >
-                                    <TextInput
-                                        placeholder='Add new citations'
-                                        style={{width:'90%'}}
-                                        multiline={true}
-                                        numberOfLines={3}
-                                        onChangeText = {(value)=>this.newCitationText(value)}
+                                <View style={{maxHeight:height>600?height/3:height/4}}>
+                                    <FlatList
+                                        data={this.props.bookListRedux[this.props.index].book_citations.split('appendstringfromsqlite')}
+                                        keyExtractor={(index) => index}
+                                        renderItem={({ item, index }) =>
+                                            <View style={{ width: '100%', height: 25 }}>
+                                                <Text style={{ fontSize: 12, fontWeight: 'bold' }}>{item}</Text>
+                                            </View>
+                                        }
                                     />
-                                    <TouchableOpacity
-                                    onPress = {()=>this.newCitation(this.props.item.book_id)}
+                                    <View
+                                        style={{ backgroundColor: 'white', width: '100%', height: height / 16, flexDirection: 'row' }}
                                     >
-                                    <Ionicons
-                                    name = 'md-send'
-                                    color='#CB2000'
-                                    size = {height/25}
-                                    />
-                                    </TouchableOpacity>
-                                </View>
+                                        <TextInput
+                                            placeholder='Add new citations'
+                                            style={{ width: '90%' }}
+                                            multiline={true}
+                                            numberOfLines={3}
+                                            onChangeText={(value) => this.newCitationText(value)}
+                                        />
+                                        <TouchableOpacity
+                                            onPress={() => this.newCitation(this.props.item.book_id)}
+                                        >
+                                            <Ionicons
+                                                name='md-send'
+                                                color='#CB2000'
+                                                size={height / 25}
+                                            />
+                                        </TouchableOpacity>
+                                    </View>
                                 </View>
                             }
                         </View>
@@ -142,8 +143,8 @@ function mapStateToProps(state) { //MAPLEME YAPARAK COMPONENTTE KULLANDIĞIMIZ C
 }
 function mapDispatchToProps(dispatch) { //EĞER SADECE LİSTELEME YAPACAKSAK BUNA GEREK YOK AMA STATE'İ DEĞİŞTİRCEKSEK BU LAZIM
     return {
-        append_citation: (id) => dispatch({ type: 'append_citation', appendText:newCitationText,bookId:id})
+        append_citation: (id) => dispatch({ type: 'append_citation', appendText: newCitationText, bookId: id })
     }
 }
 
-export default connect(mapStateToProps,mapDispatchToProps)(CustomModal)
+export default connect(mapStateToProps, mapDispatchToProps)(CustomModal)

@@ -111,7 +111,7 @@ class Book extends React.Component {
                             <Ionicons
                                 name='ios-trash'
                                 size={49}
-                                color='grey'
+                                color='#E5813E'
 
                             />
                             <Text style={{fontWeight:'bold'}}>Delete</Text>
@@ -128,7 +128,7 @@ class Book extends React.Component {
                             <MaterialCommunityIcons
                                 name='update'
                                 size={49}
-                                color='grey'
+                                color='#E5813E'
                             />
                             <Text style={{fontWeight:'bold'}}>Update</Text>
                         </TouchableOpacity>

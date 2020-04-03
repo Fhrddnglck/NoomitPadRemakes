@@ -60,7 +60,7 @@ class BookList extends React.Component {
                 <SafeAreaView style={{ alignItems: 'center', justifyContent: 'center' }}>
                     <CustomModal modalVisible={this.state.modalVisible} onClose={this.closeModal} item={this.state.item} index={this.state.index}/>
                     <UpdateBook item={this.state.updateItem} modalVisible = {this.state.updateVisible} onCloseUpdate = {this.closeUpdate}/>
-                    <Text style={{ fontSize: 25, marginTop: 30 }}>Showing {this.props.bookListRedux.length} books</Text>
+                    <Text style={{ fontSize: 25, marginTop: 30,color:'white'}}>Showing {this.props.bookListRedux.length} books</Text>
                     <AdMobBanner
                         adSize="fullBanner"
                         adUnitID="ca-app-pub-1457835335539533/4892838374"

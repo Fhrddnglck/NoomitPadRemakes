@@ -202,7 +202,7 @@ class UpdateBook extends React.Component {
                             <TouchableOpacity
                                 onPress={() => this.updateBookHandle()}
                                 style={{ borderRadius: 180, width: '60%', justifyContent: 'center', alignItems: 'center', marginTop: 32, height: height / 8, shadowColor: 'black', shadowOffset: { width: 3, height: 4 }, shadowRadius: 16, shadowOpacity: 0.4, backgroundColor: 'white', elevation: 3 }}>
-                                <Text style={{ fontWeight: 'bold', fontSize: 32, color: '#FEBF90' }}>Update</Text>
+                                <Text style={{ fontWeight: 'bold', fontSize: 32, color: '#AC667C' }}>Update</Text>
                             </TouchableOpacity>
                         </View>
                     </ScrollView>

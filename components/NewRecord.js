@@ -90,7 +90,7 @@ class NewRecord extends React.Component {
                         <View style={styles.inputItem}>
                             <MaterialCommunityIcons
                                 name='book-open-page-variant'
-                                color='#E30000'
+                                color='#FC813C'
                                 size={25}
                                 style={{ width: 25, marginLeft: 16 }}
                             />
@@ -103,7 +103,7 @@ class NewRecord extends React.Component {
                         <View style={styles.inputItem}>
                             <Ionicons
                                 name='ios-person'
-                                color='#E30000'
+                                color='#FC813C'
                                 size={25}
                                 style={{ width: 25, marginLeft: 16 }}
                             />
@@ -116,7 +116,7 @@ class NewRecord extends React.Component {
                         <View style={styles.inputItem}>
                             <Foundation
                                 name='page-multiple'
-                                color='#E30000'
+                                color='#FC813C'
                                 size={25}
                                 style={{ width: 25, marginLeft: 16 }}
                             />
@@ -130,7 +130,7 @@ class NewRecord extends React.Component {
                         <View style={[styles.inputItem, { height: height / 8, borderRadius: 15 }]}>
                             <MaterialCommunityIcons
                                 name='text-subject'
-                                color='#E30000'
+                                color='#FC813C'
                                 size={25}
                                 style={{ width: 25, marginLeft: 16 }}
                             />
@@ -145,7 +145,7 @@ class NewRecord extends React.Component {
                         <View style={[styles.inputItem, { height: height / 8, borderRadius: 15 }]}>
                             <FontAwesome
                                 name='pagelines'
-                                color='#E30000'
+                                color='#FC813C'
                                 size={25}
                                 style={{ width: 25, marginLeft: 16 }}
                             />
@@ -167,7 +167,7 @@ class NewRecord extends React.Component {
                         <TouchableOpacity 
                         onPress={() => this.saveBook()}
                         style={{ borderRadius: 180, width: '60%', justifyContent: 'center', alignItems: 'center', marginTop: 32, height: height / 8, shadowColor: 'black', shadowOffset: { width: 3, height: 4 }, shadowRadius: 16, shadowOpacity: 0.4, backgroundColor: 'white', elevation: 3 }}>
-                            <Text style={{ fontWeight: 'bold', fontSize: 32, color: '#FEBF90' }}>SAVE</Text>
+                            <Text style={{ fontWeight: 'bold', fontSize: 32, color: '#FC813C' }}>SAVE</Text>
                         </TouchableOpacity>
                     </View>
                 </ScrollView>

@@ -92,7 +92,7 @@ apply from: "../../node_modules/react-native/react.gradle"
  * Upload all the APKs to the Play Store and people will download
  * the correct one based on the CPU architecture of their device.
  */
-def enableSeparateBuildPerCPUArchitecture = false//CHANGE THİS <--
+def enableSeparateBuildPerCPUArchitecture = true//CHANGE THİS <--
 
 /**
  * Run Proguard to shrink the Java bytecode in release builds.
@@ -137,6 +137,10 @@ android {
         versionName "1.0"
         multiDexEnabled true
     }
+    dexOptions{
+        incremental true
+        javaMaxHeapSize "4g"
+    }
     splits {
         abi {
             reset()
@@ -168,7 +172,7 @@ android {
         release {
             // Caution! In production, you need to generate your own keystore file.
             // see https://facebook.github.io/react-native/docs/signed-apk-android.
-            signingConfig signingConfigs.debug
+            signingConfig signingConfigs.release
             minifyEnabled enableProguardInReleaseBuilds
             proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
         }
